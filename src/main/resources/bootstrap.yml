@@ -17,27 +17,6 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: SMARTCOOK
-          uri: lb://SMARTCOOK
-          filters:
-            - SetPath=/menu-anon/{path}
-            - RemoveResponseHeader=Mars-Token
-            - RemoveResponseHeader=Authorization
-            - RemoveRequestParameter=access_token
-          predicates:
-            - Path=/v1/api-menu/menu-anon/{path}  #直接访问菜谱接口
-        - id: SMARTCOOK
-          uri: lb://SMARTCOOK
-          filters:
-            - SetPath=/menu/{path}
-          predicates:
-            - Path=/v1/api-menu/menu/{path}   #需要权限验证
-        - id: SMARTCOOK
-          uri: lb://SMARTCOOK
-          filters:
-            - SetPath=/menu-anon/cookbooks/{path}
-          predicates:
-            - Path=/v1/api-menu/menu-anon/cookbooks/{path}  # 直接访问菜谱接口
         - id: SECURITY-UAA
           uri: lb://SECURITY-UAA
           predicates:
@@ -51,10 +30,6 @@ spring:
             - Path=/uc/**
           filter:
             - PreserveHostHeader
-        - id: APPLICATION-CLOUD
-          uri: lb://APPLICATION-CLOUD
-          predicates:
-            - Path=/application/**
       globalcors: #跨域配置
         corsConfigurations:
           '[/**]':
